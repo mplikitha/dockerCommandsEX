@@ -1,0 +1,92 @@
+// mongo db
+
+user@user-Latitude-3480:~$ mongo 
+MongoDB shell version v4.0.0
+connecting to: mongodb://127.0.0.1:27017
+MongoDB server version: 4.0.0
+Welcome to the MongoDB shell.
+For interactive help, type "help".
+For more comprehensive documentation, see
+	http://docs.mongodb.org/
+Questions? Try the support group
+	http://groups.google.com/group/mongodb-user
+Server has startup warnings: 
+2018-08-03T10:55:22.965+0000 I STORAGE  [initandlisten] 
+2018-08-03T10:55:22.965+0000 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+2018-08-03T10:55:22.965+0000 I STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+2018-08-03T10:55:24.468+0000 I CONTROL  [initandlisten] 
+2018-08-03T10:55:24.468+0000 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2018-08-03T10:55:24.468+0000 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2018-08-03T10:55:24.468+0000 I CONTROL  [initandlisten] 
+---
+Enable MongoDB's free cloud-based monitoring service to collect and display
+metrics about your deployment (disk utilization, CPU, operation statistics,
+etc).
+
+The monitoring data will be available on a MongoDB website with a unique
+URL created for you. Anyone you share the URL with will also be able to
+view this page. MongoDB may use this information to make product
+improvements and to suggest MongoDB products and deployment options to you.
+
+To enable free monitoring, run the following command:
+db.enableFreeMonitoring()
+---
+
+> show databases
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> use moviedb;
+switched to db moviedb
+> use moviecoll;
+switched to db moviecoll
+> show collections;
+> show databases;
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> db
+moviecoll
+> use local
+switched to db local
+> show collections;
+startup_log
+> use moviedb;
+switched to db moviedb
+> s={Name:"techadmin.net"}
+{ "Name" : "techadmin.net" }
+> db.testdata.insert(s);
+WriteResult({ "nInserted" : 1 })
+> db.testdata.find;
+function (query, fields, limit, skip, batchSize, options) {
+    var cursor = new DBQuery(this._mongo,
+                             this._db,
+                             this,
+                             this._fullName,
+                             this._massageObject(query),
+                             fields,
+                             limit,
+                             skip,
+                             batchSize,
+                             options || this.getQueryOptions());
+
+    {
+        const session = this.getDB().getSession();
+
+        const readPreference = session._serverSession.client.getReadPreference(session);
+        if (readPreference !== null) {
+            cursor.readPref(readPreference.mode, readPreference.tags);
+        }
+
+        const readConcern = session._serverSession.client.getReadConcern(session);
+        if (readConcern !== null) {
+            cursor.readConcern(readConcern.level);
+        }
+    }
+
+    return cursor;
+}
+> db.testdata.find();
+{ "_id" : ObjectId("5b6437d5d2bf88b6c0de4e6e"), "Name" : "techadmin.net" }
+> 
+

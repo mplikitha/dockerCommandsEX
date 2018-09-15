@@ -1,0 +1,162 @@
+my sql
+-----
+user@user-Latitude-3480:~$ sudo mysql -h
+[sudo] password for user: 
+mysql: [ERROR] mysql: option '-h' requires an argument
+user@user-Latitude-3480:~$ sudo mysql -u root -p
+Enter password: 
+ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2)
+user@user-Latitude-3480:~$ sudo apt install net-tools
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+net-tools is already the newest version (1.60-26ubuntu1).
+The following packages were automatically installed and are no longer required:
+  ant ant-optional junit junit4 libaopalliance-java libapache-pom-java
+  libasm4-java libatinject-jsr330-api-java libbsh-java libcdi-api-java
+  libcglib3-java libclassworlds-java libcommons-cli-java libcommons-codec-java
+  libcommons-httpclient-java libcommons-io-java libcommons-lang-java
+  libcommons-lang3-java libcommons-logging-java libcommons-net-java
+  libcommons-net2-java libcommons-parent-java libdom4j-java libdoxia-core-java
+  libeasymock-java libeclipse-aether-java
+  libgeronimo-interceptor-3.0-spec-java libguava-java libguice-java
+  libhamcrest-java libhttpclient-java libhttpcore-java libjaxen-java
+  libjaxp1.3-java libjdom1-java libjetty-java libjsch-java libjsoup-java
+  libjsr305-java liblog4j1.2-java libmaven-parent-java libmaven2-core-java
+  libmaven3-core-java libobjenesis-java libplexus-ant-factory-java
+  libplexus-archiver-java libplexus-bsh-factory-java libplexus-cipher-java
+  libplexus-classworlds-java libplexus-classworlds2-java libplexus-cli-java
+  libplexus-component-annotations-java libplexus-component-metadata-java
+  libplexus-container-default-java libplexus-container-default1.5-java
+  libplexus-containers-java libplexus-containers1.5-java
+  libplexus-interactivity-api-java libplexus-interpolation-java
+  libplexus-io-java libplexus-sec-dispatcher-java libplexus-utils-java
+  libplexus-utils2-java libqdox2-java libservlet2.5-java libservlet3.1-java
+  libsisu-inject-java libsisu-plexus-java libslf4j-java libwagon-java
+  libwagon2-java libxalan2-java libxbean-java libxerces2-java
+  libxml-commons-external-java libxml-commons-resolver1.1-java libxom-java
+  libxpp2-java libxpp3-java
+Use 'sudo apt autoremove' to remove them.
+0 upgraded, 0 newly installed, 0 to remove and 57 not upgraded.
+user@user-Latitude-3480:~$ ifconfig
+docker0   Link encap:Ethernet  HWaddr 02:42:ce:19:54:c2  
+          inet addr:172.17.0.1  Bcast:172.17.255.255  Mask:255.255.0.0
+          inet6 addr: fe80::42:ceff:fe19:54c2/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:57 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:324 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:10620 (10.6 KB)  TX bytes:49006 (49.0 KB)
+
+enp2s0    Link encap:Ethernet  HWaddr 58:8a:5a:25:9f:6f  
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:6946 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:6946 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:661499 (661.4 KB)  TX bytes:661499 (661.4 KB)
+
+veth31fb55a Link encap:Ethernet  HWaddr 5a:03:60:6c:d7:bd  
+          inet6 addr: fe80::5803:60ff:fe6c:d7bd/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:219 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:0 (0.0 B)  TX bytes:35097 (35.0 KB)
+
+veth56cd1de Link encap:Ethernet  HWaddr 42:a3:e8:ec:41:f8  
+          inet6 addr: fe80::40a3:e8ff:feec:41f8/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:57 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:222 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:11418 (11.4 KB)  TX bytes:31239 (31.2 KB)
+
+veth5fa6dff Link encap:Ethernet  HWaddr 76:ba:e8:41:39:43  
+          inet6 addr: fe80::74ba:e8ff:fe41:3943/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:184 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:0 (0.0 B)  TX bytes:29966 (29.9 KB)
+
+veth7aabf19 Link encap:Ethernet  HWaddr 62:2b:32:2e:44:9a  
+          inet6 addr: fe80::602b:32ff:fe2e:449a/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:53 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:0 (0.0 B)  TX bytes:7418 (7.4 KB)
+
+wlp3s0    Link encap:Ethernet  HWaddr 9c:30:5b:2f:df:f7  
+          inet addr:172.23.238.214  Bcast:172.23.238.255  Mask:255.255.255.128
+          inet6 addr: fe80::aa6e:d4bb:da2c:52ef/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:494476 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:132816 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:502921165 (502.9 MB)  TX bytes:22629250 (22.6 MB)
+
+user@user-Latitude-3480:~$ sudo mysql -h 172.23.238.214 -u root -p
+Enter password: 
+ERROR 1045 (28000): Access denied for user 'root'@'172.23.238.214' (using password: YES)
+user@user-Latitude-3480:~$ sudo mysql -h 172.23.238.214 -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 2
+Server version: 5.5.61 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use moviedb
+ERROR 1049 (42000): Unknown database 'moviedb'
+mysql> show database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database' at line 1
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
++--------------------+
+3 rows in set (0.00 sec)
+
+mysql> create database moviedb;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use moviedb;
+Database changed
+mysql> create table movie(id int,name varchar(30),rating int,year int);
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> insert into movie values(1,"appu",5,2000);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> show table;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select * from movie
+    -> ;
++------+------+--------+------+
+| id   | name | rating | year |
++------+------+--------+------+
+|    1 | appu |      5 | 2000 |
++------+------+--------+------+
+1 row in set (0.00 sec)
+
+mysql> 
+

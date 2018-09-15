@@ -1,0 +1,892 @@
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker build -t movieapp:1.0 .
+[sudo] password for user: 
+Sending build context to Docker daemon  44.71MB
+Step 1/4 : FROM java:8-jre
+8-jre: Pulling from library/java
+5040bd298390: Already exists 
+fce5728aad85: Already exists 
+c42794440453: Already exists 
+0c0da797ba48: Already exists 
+7c9b17433752: Already exists 
+114e02586e63: Already exists 
+e4c663802e9a: Already exists 
+Digest: sha256:b91008e234402fc87e7889d6af1f36b6ece844c05989236d83d1f658a6f329b0
+Status: Downloaded newer image for java:8-jre
+ ---> e44d62cf8862
+Step 2/4 : ADD ./target/movie-service-0.0.1-SNAPSHOT.jar /usr/app/movie-service-0.0.1-SNAPSHOT.jar
+ ---> dde1ae4ce2f2
+Step 3/4 : WORKDIR usr/app
+ ---> Running in ff9e7a18859c
+Removing intermediate container ff9e7a18859c
+ ---> 265f04a2d503
+Step 4/4 : ENTRYPOINT ["java","-jar", "movie-service-0.0.1-SNAPSHOT.jar"]
+ ---> Running in 5b0832e3aa13
+Removing intermediate container 5b0832e3aa13
+ ---> efa880467b1d
+Successfully built efa880467b1d
+Successfully tagged movieapp:1.0
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker images
+REPOSITORY           TAG                 IMAGE ID            CREATED             SIZE
+movieapp             1.0                 efa880467b1d        23 seconds ago      355MB
+meghnanvt/movieapp   1.0                 b1040a2bf1e6        2 hours ago         355MB
+mysql                5.5                 c43b4117afc4        3 days ago          205MB
+mongo                latest              63c6b736e399        3 days ago          379MB
+java                 8-jre               e44d62cf8862        18 months ago       311MB
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+e9a88694cd71        mysql:5.5           "docker-entrypoint.s…"   15 minutes ago      Up 15 minutes       0.0.0.0:3306->3306/tcp   nostalgic_bohr
+fce361f3dd43        mongo               "docker-entrypoint.s…"   4 hours ago         Up 4 hours          27017/tcp                stoic_clarke
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker run -p 8080:8080 -d movieapp:1.0
+3d817c10887ec727e78393d4e80502f522d5d1633568b60a99476ae6deff968c
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+3d817c10887e        movieapp:1.0        "java -jar movie-ser…"   4 seconds ago       Up 2 seconds        0.0.0.0:8080->8080/tcp   naughty_colden
+e9a88694cd71        mysql:5.5           "docker-entrypoint.s…"   15 minutes ago      Up 15 minutes       0.0.0.0:3306->3306/tcp   nostalgic_bohr
+fce361f3dd43        mongo               "docker-entrypoint.s…"   4 hours ago         Up 4 hours          27017/tcp                stoic_clarke
+user@user-Latitude-3480:~/Downloads/movie-service$ mvn clean compile package
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building movie-service 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:3.0.0:clean (default-clean) @ movie-service ---
+[INFO] Deleting /home/user/Downloads/movie-service/target
+[INFO] 
+[INFO] --- lombok-maven-plugin:1.16.6.1:delombok (delombok) @ movie-service ---
+[INFO] Delombok complete.
+[INFO] 
+[INFO] --- maven-resources-plugin:3.0.2:resources (default-resources) @ movie-service ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 0 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.7.0:compile (default-compile) @ movie-service ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 10 source files to /home/user/Downloads/movie-service/target/classes
+[INFO] 
+[INFO] --- lombok-maven-plugin:1.16.6.1:delombok (delombok) @ movie-service ---
+[INFO] Delombok complete.
+[INFO] 
+[INFO] --- maven-resources-plugin:3.0.2:resources (default-resources) @ movie-service ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 0 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.7.0:compile (default-compile) @ movie-service ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 10 source files to /home/user/Downloads/movie-service/target/classes
+[INFO] 
+[INFO] --- lombok-maven-plugin:1.16.6.1:testDelombok (test-delombok) @ movie-service ---
+[INFO] Test Delombok complete.
+[INFO] 
+[INFO] --- maven-resources-plugin:3.0.2:testResources (default-testResources) @ movie-service ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/user/Downloads/movie-service/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.7.0:testCompile (default-testCompile) @ movie-service ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /home/user/Downloads/movie-service/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.21.0:test (default-test) @ movie-service ---
+[INFO] 
+[INFO] --- maven-jar-plugin:3.0.2:jar (default-jar) @ movie-service ---
+[INFO] Building jar: /home/user/Downloads/movie-service/target/movie-service-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- spring-boot-maven-plugin:2.0.4.RELEASE:repackage (default) @ movie-service ---
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 6.191 s
+[INFO] Finished at: 2018-08-04T13:12:28+05:30
+[INFO] Final Memory: 53M/388M
+[INFO] ------------------------------------------------------------------------
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker build -t movieapp:1.0 .
+Sending build context to Docker daemon   44.7MB
+Step 1/4 : FROM java:8-jre
+ ---> e44d62cf8862
+Step 2/4 : ADD ./target/movie-service-0.0.1-SNAPSHOT.jar /usr/app/movie-service-0.0.1-SNAPSHOT.jar
+ ---> 43fb61c8034a
+Step 3/4 : WORKDIR usr/app
+ ---> Running in daff35f60e74
+Removing intermediate container daff35f60e74
+ ---> 13deba6c7161
+Step 4/4 : ENTRYPOINT ["java","-jar", "movie-service-0.0.1-SNAPSHOT.jar"]
+ ---> Running in 88f5414cda10
+Removing intermediate container 88f5414cda10
+ ---> 8ae6bc9ba86e
+Successfully built 8ae6bc9ba86e
+Successfully tagged movieapp:1.0
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker run -p 8080:8080 -d movieapp:1.0
+cd76c67be9da97ed576e7ea360c1bd63eef8e31f4e5fb63411f8700559d89c7b
+user@user-Latitude-3480:~/Downloads/movie-service$ mvn clean compile package[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building movie-service 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:3.0.0:clean (default-clean) @ movie-service ---
+[INFO] Deleting /home/user/Downloads/movie-service/target
+[INFO] 
+[INFO] --- lombok-maven-plugin:1.16.6.1:delombok (delombok) @ movie-service ---
+[INFO] Delombok complete.
+[INFO] 
+[INFO] --- maven-resources-plugin:3.0.2:resources (default-resources) @ movie-service ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 0 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.7.0:compile (default-compile) @ movie-service ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 10 source files to /home/user/Downloads/movie-service/target/classes
+[INFO] 
+[INFO] --- lombok-maven-plugin:1.16.6.1:delombok (delombok) @ movie-service ---
+[INFO] Delombok complete.
+[INFO] 
+[INFO] --- maven-resources-plugin:3.0.2:resources (default-resources) @ movie-service ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 0 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.7.0:compile (default-compile) @ movie-service ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 10 source files to /home/user/Downloads/movie-service/target/classes
+[INFO] 
+[INFO] --- lombok-maven-plugin:1.16.6.1:testDelombok (test-delombok) @ movie-service ---
+[INFO] Test Delombok complete.
+[INFO] 
+[INFO] --- maven-resources-plugin:3.0.2:testResources (default-testResources) @ movie-service ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/user/Downloads/movie-service/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.7.0:testCompile (default-testCompile) @ movie-service ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /home/user/Downloads/movie-service/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.21.0:test (default-test) @ movie-service ---
+[INFO] 
+[INFO] --- maven-jar-plugin:3.0.2:jar (default-jar) @ movie-service ---
+[INFO] Building jar: /home/user/Downloads/movie-service/target/movie-service-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- spring-boot-maven-plugin:2.0.4.RELEASE:repackage (default) @ movie-service ---
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 5.937 s
+[INFO] Finished at: 2018-08-04T13:18:05+05:30
+[INFO] Final Memory: 54M/465M
+[INFO] ------------------------------------------------------------------------
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker build -t movieapp:1.0 .
+Sending build context to Docker daemon   44.7MB
+Step 1/4 : FROM java:8-jre
+ ---> e44d62cf8862
+Step 2/4 : ADD ./target/movie-service-0.0.1-SNAPSHOT.jar /usr/app/movie-service-0.0.1-SNAPSHOT.jar
+ ---> 641c9fcab56c
+Step 3/4 : WORKDIR usr/app
+ ---> Running in ffbc2d03c85a
+Removing intermediate container ffbc2d03c85a
+ ---> 449767ca05b5
+Step 4/4 : ENTRYPOINT ["java","-jar", "movie-service-0.0.1-SNAPSHOT.jar"]
+ ---> Running in b7cff10c80c4
+Removing intermediate container b7cff10c80c4
+ ---> ab346044183a
+Successfully built ab346044183a
+Successfully tagged movieapp:1.0
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker run -p 8080:8080 -d movieapp:1.0
+defa81ba4bfe9ec462b02753e344e94f5d4551659030b5926af4c9c8b377f1e0
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+e9a88694cd71        mysql:5.5           "docker-entrypoint.s…"   24 minutes ago      Up 24 minutes       0.0.0.0:3306->3306/tcp   nostalgic_bohr
+fce361f3dd43        mongo               "docker-entrypoint.s…"   4 hours ago         Up 4 hours          27017/tcp                stoic_clarke
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker build -t movieapp:1.0 .
+Sending build context to Docker daemon   44.7MB
+Step 1/4 : FROM java:8-jre
+ ---> e44d62cf8862
+Step 2/4 : ADD ./target/movie-service-0.0.1-SNAPSHOT.jar /usr/app/movie-service-0.0.1-SNAPSHOT.jar
+ ---> Using cache
+ ---> 641c9fcab56c
+Step 3/4 : WORKDIR usr/app
+ ---> Using cache
+ ---> 449767ca05b5
+Step 4/4 : ENTRYPOINT ["java","-jar", "movie-service-0.0.1-SNAPSHOT.jar"]
+ ---> Using cache
+ ---> ab346044183a
+Successfully built ab346044183a
+Successfully tagged movieapp:1.0
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker images
+REPOSITORY           TAG                 IMAGE ID            CREATED             SIZE
+movieapp             1.0                 ab346044183a        3 minutes ago       355MB
+<none>               <none>              8ae6bc9ba86e        5 minutes ago       355MB
+<none>               <none>              efa880467b1d        10 minutes ago      355MB
+meghnanvt/movieapp   1.0                 b1040a2bf1e6        2 hours ago         355MB
+mysql                5.5                 c43b4117afc4        3 days ago          205MB
+mongo                latest              63c6b736e399        3 days ago          379MB
+java                 8-jre               e44d62cf8862        18 months ago       311MB
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker run -p 8080:8080 -d movieapp:1.0
+74f481bc428312d2c726adbcfd35921d6bd17c11dad43058b39d1a28d07f1bf9
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+e9a88694cd71        mysql:5.5           "docker-entrypoint.s…"   25 minutes ago      Up 25 minutes       0.0.0.0:3306->3306/tcp   nostalgic_bohr
+fce361f3dd43        mongo               "docker-entrypoint.s…"   4 hours ago         Up 4 hours          27017/tcp                stoic_clarke
+user@user-Latitude-3480:~/Downloads/movie-service$ mvn clean compile package[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building movie-service 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:3.0.0:clean (default-clean) @ movie-service ---
+[INFO] Deleting /home/user/Downloads/movie-service/target
+[INFO] 
+[INFO] --- lombok-maven-plugin:1.16.6.1:delombok (delombok) @ movie-service ---
+[INFO] Delombok complete.
+[INFO] 
+[INFO] --- maven-resources-plugin:3.0.2:resources (default-resources) @ movie-service ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 0 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.7.0:compile (default-compile) @ movie-service ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 10 source files to /home/user/Downloads/movie-service/target/classes
+[INFO] 
+[INFO] --- lombok-maven-plugin:1.16.6.1:delombok (delombok) @ movie-service ---
+[INFO] Delombok complete.
+[INFO] 
+[INFO] --- maven-resources-plugin:3.0.2:resources (default-resources) @ movie-service ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 0 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.7.0:compile (default-compile) @ movie-service ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 10 source files to /home/user/Downloads/movie-service/target/classes
+[INFO] 
+[INFO] --- lombok-maven-plugin:1.16.6.1:testDelombok (test-delombok) @ movie-service ---
+[INFO] Test Delombok complete.
+[INFO] 
+[INFO] --- maven-resources-plugin:3.0.2:testResources (default-testResources) @ movie-service ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/user/Downloads/movie-service/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.7.0:testCompile (default-testCompile) @ movie-service ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /home/user/Downloads/movie-service/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.21.0:test (default-test) @ movie-service ---
+[INFO] 
+[INFO] --- maven-jar-plugin:3.0.2:jar (default-jar) @ movie-service ---
+[INFO] Building jar: /home/user/Downloads/movie-service/target/movie-service-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- spring-boot-maven-plugin:2.0.4.RELEASE:repackage (default) @ movie-service ---
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 6.154 s
+[INFO] Finished at: 2018-08-04T13:22:19+05:30
+[INFO] Final Memory: 54M/453M
+[INFO] ------------------------------------------------------------------------
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+e9a88694cd71        mysql:5.5           "docker-entrypoint.s…"   27 minutes ago      Up 27 minutes       0.0.0.0:3306->3306/tcp   nostalgic_bohr
+fce361f3dd43        mongo               "docker-entrypoint.s…"   4 hours ago         Up 4 hours          27017/tcp                stoic_clarke
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker build -t movieapp:1.0 .
+Sending build context to Docker daemon   44.7MB
+Step 1/4 : FROM java:8-jre
+ ---> e44d62cf8862
+Step 2/4 : ADD ./target/movie-service-0.0.1-SNAPSHOT.jar /usr/app/movie-service-0.0.1-SNAPSHOT.jar
+ ---> 31284b481a56
+Step 3/4 : WORKDIR usr/app
+ ---> Running in d8f23203908a
+Removing intermediate container d8f23203908a
+ ---> 8671f9176bb5
+Step 4/4 : ENTRYPOINT ["java","-jar", "movie-service-0.0.1-SNAPSHOT.jar"]
+ ---> Running in c3effc4a1858
+Removing intermediate container c3effc4a1858
+ ---> 0f96357916e3
+Successfully built 0f96357916e3
+Successfully tagged movieapp:1.0
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+e9a88694cd71        mysql:5.5           "docker-entrypoint.s…"   27 minutes ago      Up 27 minutes       0.0.0.0:3306->3306/tcp   nostalgic_bohr
+fce361f3dd43        mongo               "docker-entrypoint.s…"   4 hours ago         Up 4 hours          27017/tcp                stoic_clarke
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker run -p 8080:8080 -d movieapp:1.0
+6361b84ae758528412f6bffb19058fe7c34ab3dfd1d510550a7bfa9e9ac202df
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+6361b84ae758        movieapp:1.0        "java -jar movie-ser…"   3 seconds ago       Up 2 seconds        0.0.0.0:8080->8080/tcp   sad_engelbart
+e9a88694cd71        mysql:5.5           "docker-entrypoint.s…"   28 minutes ago      Up 28 minutes       0.0.0.0:3306->3306/tcp   nostalgic_bohr
+fce361f3dd43        mongo               "docker-entrypoint.s…"   4 hours ago         Up 4 hours          27017/tcp                stoic_clarke
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+e9a88694cd71        mysql:5.5           "docker-entrypoint.s…"   30 minutes ago      Up 30 minutes       0.0.0.0:3306->3306/tcp   nostalgic_bohr
+fce361f3dd43        mongo               "docker-entrypoint.s…"   4 hours ago         Up 4 hours          27017/tcp                stoic_clarke
+user@user-Latitude-3480:~/Downloads/movie-service$ ls
+Dockerfile  movie-service.iml  mvnw  mvnw.cmd  out  pom.xml  src  target
+user@user-Latitude-3480:~/Downloads/movie-service$ mvn clean compile package
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building movie-service 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:3.0.0:clean (default-clean) @ movie-service ---
+[INFO] Deleting /home/user/Downloads/movie-service/target
+[INFO] 
+[INFO] --- lombok-maven-plugin:1.16.6.1:delombok (delombok) @ movie-service ---
+[INFO] Delombok complete.
+[INFO] 
+[INFO] --- maven-resources-plugin:3.0.2:resources (default-resources) @ movie-service ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 0 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.7.0:compile (default-compile) @ movie-service ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 10 source files to /home/user/Downloads/movie-service/target/classes
+[INFO] 
+[INFO] --- lombok-maven-plugin:1.16.6.1:delombok (delombok) @ movie-service ---
+[INFO] Delombok complete.
+[INFO] 
+[INFO] --- maven-resources-plugin:3.0.2:resources (default-resources) @ movie-service ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 0 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.7.0:compile (default-compile) @ movie-service ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 10 source files to /home/user/Downloads/movie-service/target/classes
+[INFO] 
+[INFO] --- lombok-maven-plugin:1.16.6.1:testDelombok (test-delombok) @ movie-service ---
+[INFO] Test Delombok complete.
+[INFO] 
+[INFO] --- maven-resources-plugin:3.0.2:testResources (default-testResources) @ movie-service ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/user/Downloads/movie-service/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.7.0:testCompile (default-testCompile) @ movie-service ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /home/user/Downloads/movie-service/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.21.0:test (default-test) @ movie-service ---
+[INFO] 
+[INFO] --- maven-jar-plugin:3.0.2:jar (default-jar) @ movie-service ---
+[INFO] Building jar: /home/user/Downloads/movie-service/target/movie-service-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- spring-boot-maven-plugin:2.0.4.RELEASE:repackage (default) @ movie-service ---
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 5.914 s
+[INFO] Finished at: 2018-08-04T13:26:42+05:30
+[INFO] Final Memory: 56M/461M
+[INFO] ------------------------------------------------------------------------
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker build -t movieapp:1.0 .
+Sending build context to Docker daemon   44.7MB
+Step 1/4 : FROM java:8-jre
+ ---> e44d62cf8862
+Step 2/4 : ADD ./target/movie-service-0.0.1-SNAPSHOT.jar /usr/app/movie-service-0.0.1-SNAPSHOT.jar
+ ---> 97f0217270bc
+Step 3/4 : WORKDIR usr/app
+ ---> Running in ece03ec7da79
+Removing intermediate container ece03ec7da79
+ ---> 1eb11080a87a
+Step 4/4 : ENTRYPOINT ["java","-jar", "movie-service-0.0.1-SNAPSHOT.jar"]
+ ---> Running in 9f99aab4ffa3
+Removing intermediate container 9f99aab4ffa3
+ ---> 7a500ac68308
+Successfully built 7a500ac68308
+Successfully tagged movieapp:1.0
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker run -p 8080:8080 -d movieapp:1.0
+52a107af1ce81dadb085259553bfce4029d5324d396f24f16cb3485c24100f35
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+52a107af1ce8        movieapp:1.0        "java -jar movie-ser…"   6 seconds ago       Up 5 seconds        0.0.0.0:8080->8080/tcp   eager_ride
+e9a88694cd71        mysql:5.5           "docker-entrypoint.s…"   30 minutes ago      Up 30 minutes       0.0.0.0:3306->3306/tcp   nostalgic_bohr
+fce361f3dd43        mongo               "docker-entrypoint.s…"   4 hours ago         Up 4 hours          27017/tcp                stoic_clarke
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+e9a88694cd71        mysql:5.5           "docker-entrypoint.s…"   31 minutes ago      Up 31 minutes       0.0.0.0:3306->3306/tcp   nostalgic_bohr
+fce361f3dd43        mongo               "docker-entrypoint.s…"   4 hours ago         Up 4 hours          27017/tcp                stoic_clarke
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+e9a88694cd71        mysql:5.5           "docker-entrypoint.s…"   32 minutes ago      Up 32 minutes       0.0.0.0:3306->3306/tcp   nostalgic_bohr
+fce361f3dd43        mongo               "docker-entrypoint.s…"   4 hours ago         Up 4 hours          27017/tcp                stoic_clarke
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker build -t movieapp:1.0 .
+Sending build context to Docker daemon   44.7MB
+Step 1/4 : FROM java:8-jre
+ ---> e44d62cf8862
+Step 2/4 : ADD ./target/movie-service-0.0.1-SNAPSHOT.jar /usr/app/movie-service-0.0.1-SNAPSHOT.jar
+ ---> Using cache
+ ---> 97f0217270bc
+Step 3/4 : WORKDIR usr/app
+ ---> Using cache
+ ---> 1eb11080a87a
+Step 4/4 : ENTRYPOINT ["java","-jar", "movie-service-0.0.1-SNAPSHOT.jar"]
+ ---> Using cache
+ ---> 7a500ac68308
+Successfully built 7a500ac68308
+Successfully tagged movieapp:1.0
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker images
+REPOSITORY           TAG                 IMAGE ID            CREATED             SIZE
+movieapp             1.0                 7a500ac68308        2 minutes ago       355MB
+<none>               <none>              0f96357916e3        5 minutes ago       355MB
+<none>               <none>              ab346044183a        10 minutes ago      355MB
+<none>               <none>              8ae6bc9ba86e        13 minutes ago      355MB
+<none>               <none>              efa880467b1d        18 minutes ago      355MB
+meghnanvt/movieapp   1.0                 b1040a2bf1e6        2 hours ago         355MB
+mysql                5.5                 c43b4117afc4        3 days ago          205MB
+mongo                latest              63c6b736e399        3 days ago          379MB
+java                 8-jre               e44d62cf8862        18 months ago       311MB
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+e9a88694cd71        mysql:5.5           "docker-entrypoint.s…"   33 minutes ago      Up 33 minutes       0.0.0.0:3306->3306/tcp   nostalgic_bohr
+fce361f3dd43        mongo               "docker-entrypoint.s…"   4 hours ago         Up 4 hours          27017/tcp                stoic_clarke
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker run -p 8080:8080 -d movieapp:1.0
+2f7b58d8d61885c91418c0601f53bb2d037f91c1e34c00d477c8584d3b81365c
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+2f7b58d8d618        movieapp:1.0        "java -jar movie-ser…"   5 seconds ago       Up 3 seconds        0.0.0.0:8080->8080/tcp   jolly_carson
+e9a88694cd71        mysql:5.5           "docker-entrypoint.s…"   33 minutes ago      Up 33 minutes       0.0.0.0:3306->3306/tcp   nostalgic_bohr
+fce361f3dd43        mongo               "docker-entrypoint.s…"   4 hours ago         Up 4 hours          27017/tcp                stoic_clarke
+user@user-Latitude-3480:~/Downloads/movie-service$ ^C
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+e9a88694cd71        mysql:5.5           "docker-entrypoint.s…"   33 minutes ago      Up 33 minutes       0.0.0.0:3306->3306/tcp   nostalgic_bohr
+fce361f3dd43        mongo               "docker-entrypoint.s…"   4 hours ago         Up 4 hours          27017/tcp                stoic_clarke
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker logs 2f7b58d8d618 
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.0.4.RELEASE)
+
+2018-08-04 07:59:24.091  INFO 1 --- [           main] c.s.m.MovieserviceApplication            : Starting MovieserviceApplication v0.0.1-SNAPSHOT on 2f7b58d8d618 with PID 1 (/usr/app/movie-service-0.0.1-SNAPSHOT.jar started by root in /usr/app)
+2018-08-04 07:59:24.098  INFO 1 --- [           main] c.s.m.MovieserviceApplication            : No active profile set, falling back to default profiles: default
+2018-08-04 07:59:24.193  INFO 1 --- [           main] ConfigServletWebServerApplicationContext : Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@63e31ee: startup date [Sat Aug 04 07:59:24 UTC 2018]; root of context hierarchy
+2018-08-04 07:59:26.197  INFO 1 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$4b5978c5] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-08-04 07:59:26.732  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2018-08-04 07:59:26.764  INFO 1 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2018-08-04 07:59:26.765  INFO 1 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.32
+2018-08-04 07:59:26.776  INFO 1 --- [ost-startStop-1] o.a.catalina.core.AprLifecycleListener   : The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib]
+2018-08-04 07:59:26.867  INFO 1 --- [ost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2018-08-04 07:59:26.867  INFO 1 --- [ost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 2677 ms
+2018-08-04 07:59:26.901  INFO 1 --- [ost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Servlet dispatcherServlet mapped to [/]
+2018-08-04 07:59:26.905  INFO 1 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+Loading class `com.mysql.jdbc.Driver'. This is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver'. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.
+2018-08-04 07:59:27.110  INFO 1 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2018-08-04 07:59:27.114  WARN 1 --- [           main] com.zaxxer.hikari.util.DriverDataSource  : Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2018-08-04 07:59:28.413 ERROR 1 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Exception during pool initialization.
+
+java.sql.SQLSyntaxErrorException: Unknown database 'movieslist'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:118) ~[mysql-connector-java-8.0.11.jar!/:8.0.11]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:95) ~[mysql-connector-java-8.0.11.jar!/:8.0.11]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.11.jar!/:8.0.11]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:862) ~[mysql-connector-java-8.0.11.jar!/:8.0.11]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:444) ~[mysql-connector-java-8.0.11.jar!/:8.0.11]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:230) ~[mysql-connector-java-8.0.11.jar!/:8.0.11]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:226) ~[mysql-connector-java-8.0.11.jar!/:8.0.11]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:117) ~[HikariCP-2.7.9.jar!/:na]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:123) ~[HikariCP-2.7.9.jar!/:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:365) ~[HikariCP-2.7.9.jar!/:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:194) ~[HikariCP-2.7.9.jar!/:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:460) [HikariCP-2.7.9.jar!/:na]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:534) [HikariCP-2.7.9.jar!/:na]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115) [HikariCP-2.7.9.jar!/:na]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112) [HikariCP-2.7.9.jar!/:na]
+	at org.springframework.jdbc.datasource.DataSourceUtils.fetchConnection(DataSourceUtils.java:151) [spring-jdbc-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.jdbc.datasource.DataSourceUtils.doGetConnection(DataSourceUtils.java:115) [spring-jdbc-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.jdbc.datasource.DataSourceUtils.getConnection(DataSourceUtils.java:78) [spring-jdbc-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.jdbc.support.JdbcUtils.extractDatabaseMetaData(JdbcUtils.java:319) [spring-jdbc-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.jdbc.support.JdbcUtils.extractDatabaseMetaData(JdbcUtils.java:356) [spring-jdbc-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.boot.autoconfigure.orm.jpa.DatabaseLookup.getDatabase(DatabaseLookup.java:72) [spring-boot-autoconfigure-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.autoconfigure.orm.jpa.JpaProperties.determineDatabase(JpaProperties.java:166) [spring-boot-autoconfigure-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration.jpaVendorAdapter(JpaBaseConfiguration.java:111) [spring-boot-autoconfigure-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$6a303b34.CGLIB$jpaVendorAdapter$5(<generated>) [spring-boot-autoconfigure-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$6a303b34$$FastClassBySpringCGLIB$$ccdf3567.invoke(<generated>) [spring-boot-autoconfigure-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:228) [spring-core-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:361) [spring-context-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$6a303b34.jpaVendorAdapter(<generated>) [spring-boot-autoconfigure-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_111]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_111]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_111]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_111]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:582) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1247) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1096) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:535) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:495) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:251) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1135) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1062) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:818) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:724) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:474) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1247) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1096) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:535) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:495) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:251) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1135) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1062) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:818) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:724) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:474) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1247) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1096) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:535) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:495) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1089) ~[spring-context-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:859) ~[spring-context-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:550) ~[spring-context-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140) ~[spring-boot-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:762) ~[spring-boot-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:398) ~[spring-boot-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:330) ~[spring-boot-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1258) ~[spring-boot-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1246) ~[spring-boot-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at com.stackroute.movieservice.MovieserviceApplication.main(MovieserviceApplication.java:11) ~[classes!/:0.0.1-SNAPSHOT]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_111]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_111]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_111]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_111]
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:48) ~[movie-service-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:87) ~[movie-service-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:50) ~[movie-service-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:51) ~[movie-service-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+
+2018-08-04 07:59:28.420  WARN 1 --- [           main] o.s.b.a.orm.jpa.DatabaseLookup           : Unable to determine jdbc url from datasource
+
+org.springframework.jdbc.support.MetaDataAccessException: Could not get Connection for extracting meta-data; nested exception is org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is java.sql.SQLSyntaxErrorException: Unknown database 'movieslist'
+	at org.springframework.jdbc.support.JdbcUtils.extractDatabaseMetaData(JdbcUtils.java:328) ~[spring-jdbc-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.jdbc.support.JdbcUtils.extractDatabaseMetaData(JdbcUtils.java:356) ~[spring-jdbc-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.boot.autoconfigure.orm.jpa.DatabaseLookup.getDatabase(DatabaseLookup.java:72) ~[spring-boot-autoconfigure-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.autoconfigure.orm.jpa.JpaProperties.determineDatabase(JpaProperties.java:166) [spring-boot-autoconfigure-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration.jpaVendorAdapter(JpaBaseConfiguration.java:111) [spring-boot-autoconfigure-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$6a303b34.CGLIB$jpaVendorAdapter$5(<generated>) [spring-boot-autoconfigure-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$6a303b34$$FastClassBySpringCGLIB$$ccdf3567.invoke(<generated>) [spring-boot-autoconfigure-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:228) [spring-core-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:361) [spring-context-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration$$EnhancerBySpringCGLIB$$6a303b34.jpaVendorAdapter(<generated>) [spring-boot-autoconfigure-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_111]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_111]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_111]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_111]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:582) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1247) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1096) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:535) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:495) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:251) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1135) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1062) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:818) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:724) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:474) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1247) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1096) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:535) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:495) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:251) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1135) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1062) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:818) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:724) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:474) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1247) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1096) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:535) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:495) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1089) ~[spring-context-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:859) ~[spring-context-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:550) ~[spring-context-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140) ~[spring-boot-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:762) ~[spring-boot-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:398) ~[spring-boot-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:330) ~[spring-boot-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1258) ~[spring-boot-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1246) ~[spring-boot-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at com.stackroute.movieservice.MovieserviceApplication.main(MovieserviceApplication.java:11) ~[classes!/:0.0.1-SNAPSHOT]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_111]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_111]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_111]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_111]
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:48) ~[movie-service-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:87) ~[movie-service-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:50) ~[movie-service-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:51) ~[movie-service-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+Caused by: org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is java.sql.SQLSyntaxErrorException: Unknown database 'movieslist'
+	at org.springframework.jdbc.datasource.DataSourceUtils.getConnection(DataSourceUtils.java:81) ~[spring-jdbc-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.jdbc.support.JdbcUtils.extractDatabaseMetaData(JdbcUtils.java:319) ~[spring-jdbc-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	... 69 common frames omitted
+Caused by: java.sql.SQLSyntaxErrorException: Unknown database 'movieslist'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:118) ~[mysql-connector-java-8.0.11.jar!/:8.0.11]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:95) ~[mysql-connector-java-8.0.11.jar!/:8.0.11]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.11.jar!/:8.0.11]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:862) ~[mysql-connector-java-8.0.11.jar!/:8.0.11]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:444) ~[mysql-connector-java-8.0.11.jar!/:8.0.11]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:230) ~[mysql-connector-java-8.0.11.jar!/:8.0.11]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:226) ~[mysql-connector-java-8.0.11.jar!/:8.0.11]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:117) ~[HikariCP-2.7.9.jar!/:na]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:123) ~[HikariCP-2.7.9.jar!/:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:365) ~[HikariCP-2.7.9.jar!/:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:194) ~[HikariCP-2.7.9.jar!/:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:460) ~[HikariCP-2.7.9.jar!/:na]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:534) ~[HikariCP-2.7.9.jar!/:na]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115) ~[HikariCP-2.7.9.jar!/:na]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112) ~[HikariCP-2.7.9.jar!/:na]
+	at org.springframework.jdbc.datasource.DataSourceUtils.fetchConnection(DataSourceUtils.java:151) ~[spring-jdbc-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.jdbc.datasource.DataSourceUtils.doGetConnection(DataSourceUtils.java:115) ~[spring-jdbc-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.jdbc.datasource.DataSourceUtils.getConnection(DataSourceUtils.java:78) ~[spring-jdbc-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	... 70 common frames omitted
+
+2018-08-04 07:59:28.458  INFO 1 --- [           main] j.LocalContainerEntityManagerFactoryBean : Building JPA container EntityManagerFactory for persistence unit 'default'
+2018-08-04 07:59:28.475  INFO 1 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2018-08-04 07:59:28.567  INFO 1 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.2.17.Final}
+2018-08-04 07:59:28.569  INFO 1 --- [           main] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2018-08-04 07:59:28.621  INFO 1 --- [           main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+2018-08-04 07:59:28.800  INFO 1 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2018-08-04 07:59:28.801  WARN 1 --- [           main] com.zaxxer.hikari.util.DriverDataSource  : Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2018-08-04 07:59:29.805 ERROR 1 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Exception during pool initialization.
+
+java.sql.SQLSyntaxErrorException: Unknown database 'movieslist'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:118) ~[mysql-connector-java-8.0.11.jar!/:8.0.11]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:95) ~[mysql-connector-java-8.0.11.jar!/:8.0.11]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.11.jar!/:8.0.11]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:862) ~[mysql-connector-java-8.0.11.jar!/:8.0.11]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:444) ~[mysql-connector-java-8.0.11.jar!/:8.0.11]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:230) ~[mysql-connector-java-8.0.11.jar!/:8.0.11]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:226) ~[mysql-connector-java-8.0.11.jar!/:8.0.11]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:117) ~[HikariCP-2.7.9.jar!/:na]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:123) ~[HikariCP-2.7.9.jar!/:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:365) ~[HikariCP-2.7.9.jar!/:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:194) ~[HikariCP-2.7.9.jar!/:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:460) [HikariCP-2.7.9.jar!/:na]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:534) [HikariCP-2.7.9.jar!/:na]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115) [HikariCP-2.7.9.jar!/:na]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112) [HikariCP-2.7.9.jar!/:na]
+	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:122) [hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:180) [hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:68) [hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:35) [hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:88) [hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:259) [hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:233) [hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:210) [hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.engine.jdbc.internal.JdbcServicesImpl.configure(JdbcServicesImpl.java:51) [hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.configureService(StandardServiceRegistryImpl.java:94) [hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:242) [hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:210) [hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.handleTypes(MetadataBuildingProcess.java:352) [hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:111) [hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:861) [hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:888) [hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:57) [spring-orm-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365) [spring-orm-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:390) [spring-orm-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:377) [spring-orm-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341) [spring-orm-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1758) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1695) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:573) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:495) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) [spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1089) ~[spring-context-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:859) ~[spring-context-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:550) ~[spring-context-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140) ~[spring-boot-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:762) ~[spring-boot-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:398) ~[spring-boot-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:330) ~[spring-boot-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1258) ~[spring-boot-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1246) ~[spring-boot-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at com.stackroute.movieservice.MovieserviceApplication.main(MovieserviceApplication.java:11) ~[classes!/:0.0.1-SNAPSHOT]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_111]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_111]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_111]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_111]
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:48) ~[movie-service-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:87) ~[movie-service-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:50) ~[movie-service-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:51) ~[movie-service-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+
+2018-08-04 07:59:29.807  WARN 1 --- [           main] o.h.e.j.e.i.JdbcEnvironmentInitiator     : HHH000342: Could not obtain connection to query metadata : Unknown database 'movieslist'
+2018-08-04 07:59:29.815  WARN 1 --- [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is org.hibernate.service.spi.ServiceException: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment]
+2018-08-04 07:59:29.824  INFO 1 --- [           main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2018-08-04 07:59:29.864  INFO 1 --- [           main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2018-08-04 07:59:29.871 ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is org.hibernate.service.spi.ServiceException: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1699) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:573) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:495) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1089) ~[spring-context-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:859) ~[spring-context-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:550) ~[spring-context-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140) ~[spring-boot-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:762) [spring-boot-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:398) [spring-boot-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:330) [spring-boot-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1258) [spring-boot-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1246) [spring-boot-2.0.4.RELEASE.jar!/:2.0.4.RELEASE]
+	at com.stackroute.movieservice.MovieserviceApplication.main(MovieserviceApplication.java:11) [classes!/:0.0.1-SNAPSHOT]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_111]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_111]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_111]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_111]
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:48) [movie-service-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:87) [movie-service-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:50) [movie-service-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:51) [movie-service-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+Caused by: org.hibernate.service.spi.ServiceException: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:271) ~[hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:233) ~[hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:210) ~[hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.engine.jdbc.internal.JdbcServicesImpl.configure(JdbcServicesImpl.java:51) ~[hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.configureService(StandardServiceRegistryImpl.java:94) ~[hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:242) ~[hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:210) ~[hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.handleTypes(MetadataBuildingProcess.java:352) ~[hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:111) ~[hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:861) ~[hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:888) ~[hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:57) ~[spring-orm-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365) ~[spring-orm-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:390) ~[spring-orm-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:377) ~[spring-orm-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341) ~[spring-orm-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1758) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1695) ~[spring-beans-5.0.8.RELEASE.jar!/:5.0.8.RELEASE]
+	... 24 common frames omitted
+Caused by: org.hibernate.HibernateException: Access to DialectResolutionInfo cannot be null when 'hibernate.dialect' not set
+	at org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl.determineDialect(DialectFactoryImpl.java:100) ~[hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl.buildDialect(DialectFactoryImpl.java:54) ~[hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:137) ~[hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:35) ~[hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:88) ~[hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:259) ~[hibernate-core-5.2.17.Final.jar!/:5.2.17.Final]
+	... 41 common frames omitted
+
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker ps
+[sudo] password for user: 
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+e9a88694cd71        mysql:5.5           "docker-entrypoint.s…"   About an hour ago   Up About an hour    0.0.0.0:3306->3306/tcp   nostalgic_bohr
+fce361f3dd43        mongo               "docker-entrypoint.s…"   5 hours ago         Up 5 hours          27017/tcp                stoic_clarke
+user@user-Latitude-3480:~/Downloads/movie-service$ mvn clean compile package[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building movie-service 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:3.0.0:clean (default-clean) @ movie-service ---
+[INFO] Deleting /home/user/Downloads/movie-service/target
+[INFO] 
+[INFO] --- lombok-maven-plugin:1.16.6.1:delombok (delombok) @ movie-service ---
+[INFO] Delombok complete.
+[INFO] 
+[INFO] --- maven-resources-plugin:3.0.2:resources (default-resources) @ movie-service ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 0 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.7.0:compile (default-compile) @ movie-service ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 10 source files to /home/user/Downloads/movie-service/target/classes
+[INFO] 
+[INFO] --- lombok-maven-plugin:1.16.6.1:delombok (delombok) @ movie-service ---
+[INFO] Delombok complete.
+[INFO] 
+[INFO] --- maven-resources-plugin:3.0.2:resources (default-resources) @ movie-service ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 0 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.7.0:compile (default-compile) @ movie-service ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 10 source files to /home/user/Downloads/movie-service/target/classes
+[INFO] 
+[INFO] --- lombok-maven-plugin:1.16.6.1:testDelombok (test-delombok) @ movie-service ---
+[INFO] Test Delombok complete.
+[INFO] 
+[INFO] --- maven-resources-plugin:3.0.2:testResources (default-testResources) @ movie-service ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/user/Downloads/movie-service/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.7.0:testCompile (default-testCompile) @ movie-service ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /home/user/Downloads/movie-service/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.21.0:test (default-test) @ movie-service ---
+[INFO] 
+[INFO] --- maven-jar-plugin:3.0.2:jar (default-jar) @ movie-service ---
+[INFO] Building jar: /home/user/Downloads/movie-service/target/movie-service-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- spring-boot-maven-plugin:2.0.4.RELEASE:repackage (default) @ movie-service ---
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 6.323 s
+[INFO] Finished at: 2018-08-04T13:59:25+05:30
+[INFO] Final Memory: 54M/459M
+[INFO] ------------------------------------------------------------------------
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker build -t movieapp:1.0 .
+Sending build context to Docker daemon   44.7MB
+Step 1/4 : FROM java:8-jre
+ ---> e44d62cf8862
+Step 2/4 : ADD ./target/movie-service-0.0.1-SNAPSHOT.jar /usr/app/movie-service-0.0.1-SNAPSHOT.jar
+ ---> ddd335e5cc55
+Step 3/4 : WORKDIR usr/app
+ ---> Running in 553dd284ea0c
+Removing intermediate container 553dd284ea0c
+ ---> bad4d0a80f25
+Step 4/4 : ENTRYPOINT ["java","-jar", "movie-service-0.0.1-SNAPSHOT.jar"]
+ ---> Running in fc55834294d9
+Removing intermediate container fc55834294d9
+ ---> 123bf49183e0
+Successfully built 123bf49183e0
+Successfully tagged movieapp:1.0
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker run -p 8080:8080 -d movieapp:1.0
+dbec354c6ff3bf46b5127e36b6698e9cffc09c1375d2d4fd89ae1bdcf891097d
+user@user-Latitude-3480:~/Downloads/movie-service$ sudo docker psCONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+dbec354c6ff3        movieapp:1.0        "java -jar movie-ser…"   6 seconds ago       Up 5 seconds        0.0.0.0:8080->8080/tcp   nostalgic_dijkstra
+e9a88694cd71        mysql:5.5           "docker-entrypoint.s…"   About an hour ago   Up About an hour    0.0.0.0:3306->3306/tcp   nostalgic_bohr
+fce361f3dd43        mongo               "docker-entrypoint.s…"   5 hours ago         Up 5 hours          27017/tcp                stoic_clarke
+user@user-Latitude-3480:~/Downloads/movie-service$ 

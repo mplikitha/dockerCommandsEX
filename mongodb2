@@ -1,0 +1,177 @@
+// momgodb
+
+user@user-Latitude-3480:~$ sudo docker run -d mongo
+[sudo] password for user: 
+08b80f1d6abee5570318975583db5444ee5f99eb4e0369c798907895d3c0b09e
+user@user-Latitude-3480:~$ sudo docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+08b80f1d6abe        mongo               "docker-entrypoint.s…"   27 seconds ago      Up 25 seconds       27017/tcp           vibrant_ramanujan
+user@user-Latitude-3480:~$ sudo docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+mongo               latest              63c6b736e399        2 days ago          379MB
+user@user-Latitude-3480:~$ sudo docker inspect mongo
+[
+    {
+        "Id": "sha256:63c6b736e39968a2fed5319f761c0876a274ce6500f31c98fb1c1fcab8acb305",
+        "RepoTags": [
+            "mongo:latest"
+        ],
+        "RepoDigests": [
+            "mongo@sha256:8e92eff256d2b4f8d57f09bf9b5009ff8c37395728a7b812569c8ea306bdea68"
+        ],
+        "Parent": "",
+        "Comment": "",
+        "Created": "2018-07-31T16:57:26.873144958Z",
+        "Container": "334edcb7316c3b678009b8244f44412a145bcb66fe07ae27d6e1309b6c2c7c02",
+        "ContainerConfig": {
+            "Hostname": "334edcb7316c",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "27017/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "GOSU_VERSION=1.10",
+                "JSYAML_VERSION=3.10.0",
+                "GPG_KEYS=9DA31620334BD75D9DCB49F368818C72E52529D4",
+                "MONGO_PACKAGE=mongodb-org",
+                "MONGO_REPO=repo.mongodb.org",
+                "MONGO_MAJOR=4.0",
+                "MONGO_VERSION=4.0.0"
+            ],
+            "Cmd": [
+                "/bin/sh",
+                "-c",
+                "#(nop) ",
+                "CMD [\"mongod\"]"
+            ],
+            "ArgsEscaped": true,
+            "Image": "sha256:b9a2e733b6d63b2488c6ad14a57b6d80010fea7ca2f8f0790cd4a2f3fc5b6075",
+            "Volumes": {
+                "/data/configdb": {},
+                "/data/db": {}
+            },
+            "WorkingDir": "",
+            "Entrypoint": [
+                "docker-entrypoint.sh"
+            ],
+            "OnBuild": [],
+            "Labels": {}
+        },
+        "DockerVersion": "17.06.2-ce",
+        "Author": "",
+        "Config": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "27017/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "GOSU_VERSION=1.10",
+                "JSYAML_VERSION=3.10.0",
+                "GPG_KEYS=9DA31620334BD75D9DCB49F368818C72E52529D4",
+                "MONGO_PACKAGE=mongodb-org",
+                "MONGO_REPO=repo.mongodb.org",
+                "MONGO_MAJOR=4.0",
+                "MONGO_VERSION=4.0.0"
+            ],
+            "Cmd": [
+                "mongod"
+            ],
+            "ArgsEscaped": true,
+            "Image": "sha256:b9a2e733b6d63b2488c6ad14a57b6d80010fea7ca2f8f0790cd4a2f3fc5b6075",
+            "Volumes": {
+                "/data/configdb": {},
+                "/data/db": {}
+            },
+            "WorkingDir": "",
+            "Entrypoint": [
+                "docker-entrypoint.sh"
+            ],
+            "OnBuild": [],
+            "Labels": null
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 379353410,
+        "VirtualSize": 379353410,
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/fa0cce76afe888d441eb93a01efa38e65ab64b0fbcde6a70bf1dee5f8bf6e4fd/diff:/var/lib/docker/overlay2/31de68c1386b16373d144047c83269167efe2639b0c0c447485a30104788c1c4/diff:/var/lib/docker/overlay2/a2330d4cb60a47d65f83829a70469c06bd043f47388078dd9310b3345d8a5545/diff:/var/lib/docker/overlay2/57760aa25d02a68a5e0e58a4543c1f41580bce28b35905412bffa2e26fc64c77/diff:/var/lib/docker/overlay2/185bb136ca0f4a614f816d93645c021e561e2803f1dbebc784caef378dc56d88/diff:/var/lib/docker/overlay2/9e4ed28fd2f763cb5d8a0adb67b4ec2b0e78166715571fde267cdf7cccefe276/diff:/var/lib/docker/overlay2/7836f5b246ac1307dbc60ef62128383fdc3d20584b5353b4dc37dadf7b14e1c5/diff:/var/lib/docker/overlay2/0dab71031ab6c3c0630d0adeca5a0eb10d76823dbd2e0ee969896c5bf9a37ddc/diff:/var/lib/docker/overlay2/0982fcf73b7afadd7ba39855028acbd8bbd3b2e045e6ded222f7692b4e0b7d49/diff:/var/lib/docker/overlay2/164df8cffcee9a9d63b1d2800543af9ceeeaf8c71864f8e2aa58060700b48f99/diff:/var/lib/docker/overlay2/d98e8226f30e1e12987b540d6146428a106c15fc310240021525466d2df1cc63/diff:/var/lib/docker/overlay2/070824f5ab156d4464add60768bbafa7d3d329d729ea555ad75bf615693a00c8/diff:/var/lib/docker/overlay2/c18feb7bf62b166e6f821492b0c830940eef71bc905729600609fb2d5ae01d18/diff",
+                "MergedDir": "/var/lib/docker/overlay2/83b9f68368e5c214e828f85b9d69114436ff96dcca14a67273691528e6cc814d/merged",
+                "UpperDir": "/var/lib/docker/overlay2/83b9f68368e5c214e828f85b9d69114436ff96dcca14a67273691528e6cc814d/diff",
+                "WorkDir": "/var/lib/docker/overlay2/83b9f68368e5c214e828f85b9d69114436ff96dcca14a67273691528e6cc814d/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:0a42ee6ceccb1b90de2a3badec7c74cc452ce61e7ef20a80bb7f20ea53f2825e",
+                "sha256:c2af38e6b250a39e0e7b9665687385c75fdf7bab5ea856a2eec4fd6b74adda95",
+                "sha256:5e95929b27983df137a6cff59695739f69f6571e70fa68eb6a7abe3b74e402d2",
+                "sha256:2166dba7c95bfbc84b38b7a6c7d96d323d16239aeff2f2292c61821002df2dfb",
+                "sha256:bcff331e13e35a0beb71d43b4f6b859327f18587f084a1036a603e64a990e44d",
+                "sha256:299fcb8d0378526cb013ed77c87829dc12e33a32414848f1c04ae17f5b13ee75",
+                "sha256:a8a21dc191b66395242e2b4e3485ba2b1ce088e582b525184b56eb115b79e757",
+                "sha256:249aef4bae6e263b129f27f399fde827e9b029e28900091929019ef17f1676d8",
+                "sha256:a7cad40eafcdd1cb34c22147a6981ba40d41e0216dbc7ae913750d5bbe7828fb",
+                "sha256:38ecd649976bac932e48c2aaf2011aee050c1eb00ef846314878ab5bc50188dd",
+                "sha256:861bfd3f6923b58533e55618adac34ed5dff59a264f49a6337f06ca2393e7dc2",
+                "sha256:cd5e9c40250a39011b857cb42e5408b3e7978c61e76c6a916d0598c9294af19b",
+                "sha256:6b0de79a09d2290985de6f67f9ed8fa37b9275afdf01e81ff9338f834d24256f",
+                "sha256:b970d6690477ac7d661bf908790587178ab882c2367519b42e24aac759199d50"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "0001-01-01T00:00:00Z"
+        }
+    }
+]
+user@user-Latitude-3480:~$ docker history mongo|wc -l
+Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.38/images/mongo/history: dial unix /var/run/docker.sock: connect: permission denied
+0
+user@user-Latitude-3480:~$ sudo docker history mongo|wc -l
+28
+user@user-Latitude-3480:~$ sudo docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+mongo               latest              63c6b736e399        2 days ago          379MB
+user@user-Latitude-3480:~$ sudo docker run -d mongo
+951d096d20ac763031385ba9cfc8b1c00372c48882de0308d744f40bd351889a
+user@user-Latitude-3480:~$ sudo docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+951d096d20ac        mongo               "docker-entrypoint.s…"   17 seconds ago      Up 15 seconds       27017/tcp           relaxed_lamarr
+08b80f1d6abe        mongo               "docker-entrypoint.s…"   4 minutes ago       Up 4 minutes        27017/tcp           vibrant_ramanujan
+user@user-Latitude-3480:~$ sudo docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS               NAMES
+951d096d20ac        mongo               "docker-entrypoint.s…"   47 seconds ago      Up 45 seconds               27017/tcp           relaxed_lamarr
+08b80f1d6abe        mongo               "docker-entrypoint.s…"   5 minutes ago       Up 5 minutes                27017/tcp           vibrant_ramanujan
+b8337480aa4b        mongo               "docker-entrypoint.s…"   32 minutes ago      Exited (0) 18 minutes ago                       goofy_wozniak
+user@user-Latitude-3480:~$ sudo docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+951d096d20ac        mongo               "docker-entrypoint.s…"   2 minutes ago       Up 2 minutes        27017/tcp           relaxed_lamarr
+08b80f1d6abe        mongo               "docker-entrypoint.s…"   6 minutes ago       Up 6 minutes        27017/tcp           vibrant_ramanujan
+user@user-Latitude-3480:~$ sudo docker run -p 27017:27017 -d mongo
+8b2faf703c66e131f06f4002a97f036c7f02bfbffda9691883b2529e38cbe0d9
+user@user-Latitude-3480:~$ sudo docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                      NAMES
+8b2faf703c66        mongo               "docker-entrypoint.s…"   8 seconds ago       Up 6 seconds        0.0.0.0:27017->27017/tcp   sleepy_swirles
+951d096d20ac        mongo               "docker-entrypoint.s…"   8 minutes ago       Up 8 minutes        27017/tcp                  relaxed_lamarr
+08b80f1d6abe        mongo               "docker-entrypoint.s…"   12 minutes ago      Up 12 minutes       27017/tcp                  vibrant_ramanujan
+user@user-Latitude-3480:~$ 
+

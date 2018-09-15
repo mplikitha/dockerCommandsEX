@@ -1,0 +1,79 @@
+//docker
+
+user@user-Latitude-3480:~$ sudo docker pull mysql:5.5
+[sudo] password for user: 
+^C
+user@user-Latitude-3480:~$ sudo docker pull mysql:5.5
+5.5: Pulling from library/mysql
+be8881be8156: Pull complete 
+c3995dabd1d7: Pull complete 
+9931fdda3586: Pull complete 
+bb1b6b6eff6a: Pull complete 
+a65f125fa718: Pull complete 
+b5332dacc087: Pull complete 
+77378af32110: Pull complete 
+c863c888ab89: Pull complete 
+970e89bcad84: Pull complete 
+199374dd7b11: Pull complete 
+daf925b4c8c8: Pull complete 
+Digest: sha256:973d09f802e90069f4090578bbfb5f1cc095d5c14bdd0bb2651d5e448751f907
+Status: Downloaded newer image for mysql:5.5
+user@user-Latitude-3480:~$ sudo mysql ps
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+user@user-Latitude-3480:~$ sudo docker stop
+"docker stop" requires at least 1 argument.
+See 'docker stop --help'.
+
+Usage:  docker stop [OPTIONS] CONTAINER [CONTAINER...]
+
+Stop one or more running containers
+user@user-Latitude-3480:~$ sudo service mysql stop
+user@user-Latitude-3480:~$ sudo service mysql status
+● mysql.service - MySQL Community Server
+   Loaded: loaded (/lib/systemd/system/mysql.service; enabled; vendor preset: en
+   Active: inactive (dead) since Fri 2018-08-03 16:52:16 IST; 15s ago
+ Main PID: 911 (code=exited, status=0/SUCCESS)
+
+Aug 03 09:09:45 user-Latitude-3480 systemd[1]: Starting MySQL Community Server..
+Aug 03 09:09:48 user-Latitude-3480 systemd[1]: Started MySQL Community Server.
+Aug 03 16:52:14 user-Latitude-3480 systemd[1]: Stopping MySQL Community Server..
+Aug 03 16:52:16 user-Latitude-3480 systemd[1]: Stopped MySQL Community Server.
+
+user@user-Latitude-3480:~$ sudo docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+mysql               5.5                 c43b4117afc4        2 days ago          205MB
+mongo               latest              63c6b736e399        2 days ago          379MB
+user@user-Latitude-3480:~$ sudo docker run -p 3306:3306 -d mysql:5.5
+13c7252b60b6039ab5af3b82388e653fd20e623d03e636a0d2bbcfa8538a808d
+user@user-Latitude-3480:~$ sudo docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                      NAMES
+8b2faf703c66        mongo               "docker-entrypoint.s…"   28 minutes ago      Up 28 minutes       0.0.0.0:27017->27017/tcp   sleepy_swirles
+951d096d20ac        mongo               "docker-entrypoint.s…"   36 minutes ago      Up 36 minutes       27017/tcp                  relaxed_lamarr
+08b80f1d6abe        mongo               "docker-entrypoint.s…"   41 minutes ago      Up 41 minutes       27017/tcp                  vibrant_ramanujan
+user@user-Latitude-3480:~$ sudo docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                         PORTS                      NAMES
+13c7252b60b6        mysql:5.5           "docker-entrypoint.s…"   59 seconds ago      Exited (1) 56 seconds ago                                 pedantic_bhaskara
+8b2faf703c66        mongo               "docker-entrypoint.s…"   29 minutes ago      Up 29 minutes                  0.0.0.0:27017->27017/tcp   sleepy_swirles
+951d096d20ac        mongo               "docker-entrypoint.s…"   37 minutes ago      Up 37 minutes                  27017/tcp                  relaxed_lamarr
+08b80f1d6abe        mongo               "docker-entrypoint.s…"   41 minutes ago      Up 41 minutes                  27017/tcp                  vibrant_ramanujan
+b8337480aa4b        mongo               "docker-entrypoint.s…"   About an hour ago   Exited (0) About an hour ago                              goofy_wozniak
+user@user-Latitude-3480:~$ sudo docker logs 13c7252b60b6
+error: database is uninitialized and password option is not specified 
+  You need to specify one of MYSQL_ROOT_PASSWORD, MYSQL_ALLOW_EMPTY_PASSWORD and MYSQL_RANDOM_ROOT_PASSWORD
+user@user-Latitude-3480:~$ sudo docker run -p 3306:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=true -d mysql:5.5
+8773a22e2ea9142831959ac7f65b2dbd4454ed80c3d53c01b01120e48edfc67c
+user@user-Latitude-3480:~$ sudo docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                      NAMES
+8773a22e2ea9        mysql:5.5           "docker-entrypoint.s…"   9 minutes ago       Up 9 minutes        0.0.0.0:3306->3306/tcp     eager_babbage
+8b2faf703c66        mongo               "docker-entrypoint.s…"   40 minutes ago      Up 40 minutes       0.0.0.0:27017->27017/tcp   sleepy_swirles
+951d096d20ac        mongo               "docker-entrypoint.s…"   About an hour ago   Up About an hour    27017/tcp                  relaxed_lamarr
+08b80f1d6abe        mongo               "docker-entrypoint.s…"   About an hour ago   Up About an hour    27017/tcp                  vibrant_ramanujan
+user@user-Latitude-3480:~$ sudo docker stop vibrant_ramanujan
+vibrant_ramanujan
+user@user-Latitude-3480:~$ sudo docker stop relaxed_lamarr
+
+relaxed_lamarr
+user@user-Latitude-3480:~$ 
+user@user-Latitude-3480:~$ 
+
+
